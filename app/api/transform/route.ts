@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
           // prompt_strength: how much the style prompt overrides the source image.
           // 0 = keep original, 1 = ignore original. 0.75 gives strong style
           // transfer while keeping the pet's face recognisable.
-          prompt_strength: 0.75,
+          prompt_strength: 0.5,
           num_inference_steps: 28,
           guidance: 3.5,
           aspect_ratio: "4:5", // portrait — matches the 8×10 print ratio
