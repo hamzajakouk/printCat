@@ -3,9 +3,6 @@ import Stripe from "stripe";
 
 export const maxDuration = 60;
 
-// Initialise the Stripe client once at module load time.
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 // ── Printify product IDs ──────────────────────────────────────────────────────
 //
 // To find the right IDs for your 8×10 framed poster:
@@ -93,6 +90,9 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+
+  // Initialise inside the handler so the module loads cleanly at build time.
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   // ── Read raw body ────────────────────────────────────────────────────────
   // Stripe requires the raw, unparsed body to verify the request signature.
