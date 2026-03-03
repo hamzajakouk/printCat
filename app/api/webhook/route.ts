@@ -11,9 +11,9 @@ export const maxDuration = 60;
 //   3. Use the Printify API: GET /v1/catalog/blueprints/{blueprint_id}/print_providers/{provider_id}/variants.json
 //
 // You can override these without redeploying by setting env vars.
-const BLUEPRINT_ID = Number(process.env.PRINTIFY_BLUEPRINT_ID ?? 91);   // Framed Enhanced Matte Paper Poster
-const PROVIDER_ID  = Number(process.env.PRINTIFY_PROVIDER_ID  ?? 9);    // MWW On Demand
-const VARIANT_ID   = Number(process.env.PRINTIFY_VARIANT_ID   ?? 45654); // 8×10, black frame
+const BLUEPRINT_ID = Number(process.env.PRINTIFY_BLUEPRINT_ID ?? 1140);  // Framed Posters, Black
+const PROVIDER_ID  = Number(process.env.PRINTIFY_PROVIDER_ID  ?? 66);   // Prima Printing
+const VARIANT_ID   = Number(process.env.PRINTIFY_VARIANT_ID   ?? 87624); // 8"×10" Vertical, Black Frame
 
 async function createPrintifyOrder(
   shopId: string,
@@ -107,10 +107,6 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Verify webhook signature ─────────────────────────────────────────────
-  console.log("[webhook] body.length:", body.length);
-  console.log("[webhook] sig header:", signature?.slice(0, 60));
-  console.log("[webhook] secret prefix:", process.env.STRIPE_WEBHOOK_SECRET?.slice(0, 20));
-
   let event: Stripe.Event;
   try {
     event = stripe.webhooks.constructEvent(
