@@ -107,6 +107,10 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Verify webhook signature ─────────────────────────────────────────────
+  console.log("[webhook] body.length:", body.length);
+  console.log("[webhook] sig header:", signature?.slice(0, 60));
+  console.log("[webhook] secret prefix:", process.env.STRIPE_WEBHOOK_SECRET?.slice(0, 20));
+
   let event: Stripe.Event;
   try {
     event = stripe.webhooks.constructEvent(
