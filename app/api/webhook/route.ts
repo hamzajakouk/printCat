@@ -11,9 +11,9 @@ export const maxDuration = 60;
 //   3. Use the Printify API: GET /v1/catalog/blueprints/{blueprint_id}/print_providers/{provider_id}/variants.json
 //
 // You can override these without redeploying by setting env vars.
-const BLUEPRINT_ID = Number(process.env.PRINTIFY_BLUEPRINT_ID ?? 1140);  // Framed Posters, Black
-const PROVIDER_ID  = Number(process.env.PRINTIFY_PROVIDER_ID  ?? 66);   // Prima Printing
-const VARIANT_ID   = Number(process.env.PRINTIFY_VARIANT_ID   ?? 87624); // 8"×10" Vertical, Black Frame
+const BLUEPRINT_ID = Number(process.env.PRINTIFY_BLUEPRINT_ID ?? 1236);  // Framed Paper Posters
+const PROVIDER_ID  = Number(process.env.PRINTIFY_PROVIDER_ID  ?? 105);  // Jondo (US-based)
+const VARIANT_ID   = Number(process.env.PRINTIFY_VARIANT_ID   ?? 93832); // 6"×8" Vertical, Black Frame, Fine Art
 
 async function createPrintifyOrder(
   shopId: string,

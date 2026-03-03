@@ -82,7 +82,10 @@ export async function POST(req: NextRequest) {
           prompt_strength: 0.5,
           num_inference_steps: 28,
           guidance: 3.5,
-          aspect_ratio: "4:5", // portrait — matches the 8×10 print ratio
+          // 1152×1440 = max 4:5 resolution FLUX dev supports (~192 DPI at 6"×8")
+          width: 1152,
+          height: 1440,
+          output_format: "png", // lossless — better for print quality
         },
       }),
     }

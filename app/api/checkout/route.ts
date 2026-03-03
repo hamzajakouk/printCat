@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
           currency: "usd",
           unit_amount: PRICE_CENTS,
           product_data: {
-            name: "Renaissance Pet Portrait — 8×10 Framed Print",
+            name: "Renaissance Pet Portrait — 6×8 Framed Print",
             description:
               "Museum-quality giclée print in a premium black frame, delivered to your door.",
             images: [imageUrl],
