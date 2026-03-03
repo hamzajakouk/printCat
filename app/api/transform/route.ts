@@ -9,7 +9,7 @@ export const maxDuration = 60;
 // ── Model ─────────────────────────────────────────────────────────────────────
 // Using the /v1/models/.../predictions endpoint so no version hash is required —
 // Replicate will always run the latest published version of the model.
-const REPLICATE_MODEL = "lucataco/ip-adapter-sdxl";
+const REPLICATE_MODEL = "black-forest-labs/flux-dev";
 
 // ── Prompt ────────────────────────────────────────────────────────────────────
 const PROMPT =
@@ -17,10 +17,6 @@ const PROMPT =
   "with gold trim, Italian Renaissance master style, Raphael, chiaroscuro " +
   "lighting, warm rich earth tones, intricate detailed fur, dramatic dark " +
   "background, museum quality, oil on canvas texture";
-
-const NEGATIVE_PROMPT =
-  "cartoon, anime, modern, 3d render, digital art, blurry, low quality, " +
-  "ugly, deformed, text, watermark, signature, nsfw";
 
 // ── Handler ───────────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
@@ -80,15 +76,13 @@ export async function POST(req: NextRequest) {
         input: {
           image: dataUri,
           prompt: PROMPT,
-          negative_prompt: NEGATIVE_PROMPT,
-          // ip_adapter_scale controls how strongly the reference image guides
-          // the output — 0 = ignore image, 1 = copy it exactly. 0.6 is a good
-          // balance for style transfer.
-          ip_adapter_scale: 0.6,
-          num_inference_steps: 30,
-          guidance_scale: 7.5,
-          width: 768,
-          height: 1024,
+          // prompt_strength: how much the style prompt overrides the source image.
+          // 0 = keep original, 1 = ignore original. 0.75 gives strong style
+          // transfer while keeping the pet's face recognisable.
+          prompt_strength: 0.75,
+          num_inference_steps: 28,
+          guidance: 3.5,
+          aspect_ratio: "4:5", // portrait — matches the 8×10 print ratio
         },
       }),
     }

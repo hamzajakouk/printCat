@@ -89,6 +89,7 @@ export default function TransformFlow() {
   const [predictionId, setPredictionId] = useState<string | null>(null);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Lock body scroll when overlay is active
@@ -171,7 +172,31 @@ export default function TransformFlow() {
     setPredictionId(null);
     setGeneratedUrl(null);
     setApiError(null);
+    setCheckoutLoading(false);
     if (inputRef.current) inputRef.current.value = "";
+  };
+
+  const handleCheckout = async () => {
+    if (!generatedUrl) return;
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl: generatedUrl }),
+      });
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error ?? "Failed to create checkout session.");
+      }
+      const { url } = await res.json();
+      window.location.href = url;
+    } catch (err) {
+      setApiError(
+        err instanceof Error ? err.message : "Checkout failed. Please try again."
+      );
+      setCheckoutLoading(false);
+    }
   };
 
   // ── Message rotation (runs whenever loading screen is visible) ──────────────
@@ -590,8 +615,12 @@ export default function TransformFlow() {
               <GoldDivider />
 
               {/* CTAs */}
-              <button className="w-full bg-[#d4af37] text-black py-4 text-sm font-semibold tracking-[0.2em] uppercase hover:bg-[#f0d060] transition-colors duration-300 mb-3">
-                Proceed to Checkout
+              <button
+                onClick={handleCheckout}
+                disabled={checkoutLoading}
+                className="w-full bg-[#d4af37] text-black py-4 text-sm font-semibold tracking-[0.2em] uppercase hover:bg-[#f0d060] transition-colors duration-300 mb-3 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {checkoutLoading ? "Preparing Checkout…" : "Proceed to Checkout"}
               </button>
               <button
                 onClick={reset}

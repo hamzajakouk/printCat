@@ -24,7 +24,7 @@ const galleryItems = [
     name: "Countess Esmeralda",
     species: "Persian Cat",
     style: "Dutch Golden Age",
-    gradient: "from-[#1f2b1a] via-[#16201100] to-[#0e1509]",
+    gradient: "from-[#1f2b1a] via-[#162011] to-[#0e1509]",
     accentColor: "#8db87a",
     description: "After the school of Rembrandt, c. 1665",
   },
